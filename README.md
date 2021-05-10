@@ -92,3 +92,4 @@ As shown in the table below, the sole unrolling of the innermost loop did not ha
 
 Such implementation yields the higher performance so far, reaching 120 GFLOPS. One again, applying fused multiply-add and loop unrolling did not have an beneficial effect overall, but for matrices with sizes between 1024x1024 and 1536x1536 a slight improvement is to be seen.
 
+![cuda_matmul_perf](https://user-images.githubusercontent.com/61798212/117695529-3bc81800-b1b8-11eb-8057-63c877959e80.png)
