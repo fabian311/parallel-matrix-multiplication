@@ -34,7 +34,7 @@ __matmul__(*A, B, C*)
  
       end for
       
-![GEMM](https://user-images.githubusercontent.com/61798212/117692435-ecccb380-b1b4-11eb-9e98-f38cec0785f1.png)
+<img src="https://user-images.githubusercontent.com/61798212/117692435-ecccb380-b1b4-11eb-9e98-f38cec0785f1.png" height="320" width="500">
 
 The blue area shows a 
 portion of the C matrix which is being computed in parallel within 1 CUDA block. The red areas 
@@ -92,4 +92,4 @@ As shown in the table below, the sole unrolling of the innermost loop did not ha
 
 Such implementation yields the higher performance so far, reaching 120 GFLOPS. One again, applying fused multiply-add and loop unrolling did not have an beneficial effect overall, but for matrices with sizes between 1024x1024 and 1536x1536 a slight improvement is to be seen.
 
-![cuda_matmul_perf](https://user-images.githubusercontent.com/61798212/117695529-3bc81800-b1b8-11eb-8057-63c877959e80.png)
+<img src="https://user-images.githubusercontent.com/61798212/117695529-3bc81800-b1b8-11eb-8057-63c877959e80.png" height="320" width="500">
