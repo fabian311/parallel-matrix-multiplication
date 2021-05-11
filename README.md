@@ -58,19 +58,19 @@ This report focuses on the GEMM algorithm, implemented in parallel using CUDA JI
 
 Performance evaluation of each different CUDA kernel has been executed on a NVIDIA Tesla T4 hardware which reaches a double precision peak performance of 254.4 GFLOPS1.
 
-###Numpy Matmul
+### Numpy Matmul
 
 The Numpy matmul function, which is a serial implementation of the matrix multiplication algorithm executing on the CPU, will be considered as a very first benchmark for performance evaluations. The C = A x B matrix resulting from this function also provides a valid output to verify the correctness of the results
 of further implementations of the GEMM algorithm. This function sets the benchmark at approximatively 40 GFLOPS.
 
-###Naïve CUDA
+### Naïve CUDA
 
 Moving to CUDA kernels, after running a number of tests involving block size, I recognised that a shape of (8, 8) threads per block lead to the best performance results. Thus, all the following parallel implementations share the same number and shape of (8, 8) threads per block.
 
 In the naïve CUDA implementation, each thread loads a row of matrix A and a column of matrix B from global 
 memory and successively computes the dot product to obtain one element of C. With a performance of more than 70 GFLOPS for large matrix sizes, a significant performance improvement can be observed if compared to Numpy’s matmul.
 
-###Shared Memory - Tiling
+### Shared Memory - Tiling
 
 By introducing the use of shared memory and tiling, threads belonging to the same block have access to a portion of shared memory, whose shape and dimensions can be set up by the programmer. In this case, I allocated two 2D arrays of shared memory of the same dimension as the thread block, specifying a double precision data type (float64):
 
@@ -84,7 +84,8 @@ Next, tiles of A and B are iteratively loaded into shared memory, looping over a
 
 The use of shared memory reduces the loads from global memory, making the algorithm faster than the naïve version, especially for matrices with shape less than 2000x2000, where a gap of about 40 GFLOPS is recorded. This version performs steadily at just under 90 GFLOPS for large matrix sizes.
 
-###Further Implementations
+### Further Implementations
+
 As shown in the table below, the sole unrolling of the innermost loop did not have an improving impact. Similarly, applying the fma function, which combines the multiplying and adding operationsinto a single operation, did not bring any performance improvements in the Python environment. The single most effective improvement to the shared memory implementation is swapping the indexes of sA and sB to take advantage of caching lines.
 
            sA[tc, tr] = A[r, tc + i * T]
